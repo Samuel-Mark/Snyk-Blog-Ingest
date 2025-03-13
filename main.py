@@ -1,7 +1,8 @@
 import sys
+import json
 from static import fetch_static
 from dynamic import fetch_dynamic
-from process import extract_titles, filter_and_format
+from process import extract_posts, filter_and_format
 
 def main():
     mode = 'static'
@@ -20,10 +21,13 @@ def main():
         return
 
     if html_content:
-        titles = extract_titles(html_content)
-        formatted_titles = filter_and_format(titles)
-        for title in formatted_titles:
-            print(title)
+        posts = extract_posts(html_content)
+        formatted_posts = filter_and_format(posts)
+        
+        with open('posts.json', 'w') as json_file:
+            json.dump(formatted_posts, json_file, indent=4)
+        
+        print("Data has been exported to posts.json")
 
 if __name__ == "__main__":
     main()

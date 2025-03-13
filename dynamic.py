@@ -5,23 +5,19 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 def fetch_dynamic(url):
-    # Set up Selenium WebDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     
-    # Open the webpage
     driver.get(url)
     
-    # Click the "Show previous updates" link until all articles are loaded
     while True:
         try:
             show_more_link = driver.find_element(By.CSS_SELECTOR, 'div.pagination a')
             show_more_link.click()
-            time.sleep(2)  # Wait for content to load
+            time.sleep(2)
         except:
-            break  # Exit loop if link is not found
+            break
     
-    # Get the page source and close the browser
     html_content = driver.page_source
     driver.quit()
     
