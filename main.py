@@ -52,7 +52,11 @@ def main():
             
             # update existing or add new
             for new_post in new_posts:
-                if new_post['title'] not in existing_posts_dict:
+                if new_post['title'] in existing_posts_dict:
+                    existing_post = existing_posts_dict[new_post['title']]
+                    if new_post['body'] != existing_post['body']:
+                        existing_posts_dict[new_post['title']] = new_post
+                else:
                     existing_posts_dict[new_post['title']] = new_post
             
             updated_posts = sorted(existing_posts_dict.values(), key=lambda x: (x['year'], x['month'], x['day'], x['time']))
