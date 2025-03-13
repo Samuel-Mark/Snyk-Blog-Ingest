@@ -32,7 +32,11 @@ def main():
             posts_by_date[year_month].append(post)
         
         for year_month, posts in posts_by_date.items():
-            with open(f'snky_updates_{year_month}.json', 'w', encoding='utf-8') as json_file:
+            # with open(f'snky_updates_{year_month}.json', 'w', encoding='utf-8') as json_file:
+            # below works as long as snyk_updates/ directory exists
+            # did not want to import os due to cyber concerns?
+            # A README is included to force the directories existance.
+            with open(f'{'snyk_updates'}/snyk_{year_month}.json', 'w', encoding='utf-8') as json_file:
                 json.dump(posts, json_file, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
