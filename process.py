@@ -24,9 +24,14 @@ def replace_unicode_characters(text):
     return unidecode(text)
 
 def replace_control_codes(text):
-    text = text.replace('\\n', ' ')
-    text = text.replace('\n', ' ')
-    text = text.replace('\"', "'")
+    replacements = {
+        '\n': ' ',
+        '\"': "'"
+    }
+    
+    for key, value in replacements.items():
+        text = text.replace(key, value)
+    
     return text
 
 def filter_and_format(posts):
