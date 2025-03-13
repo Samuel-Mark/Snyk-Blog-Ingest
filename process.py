@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from unidecode import unidecode
+from datetime import datetime
 
 def extract_posts(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -46,11 +47,24 @@ def filter_and_format(posts):
         
         body = replace_control_codes(body)
         
+        date_published = post['date_published']
+        if date_published:
+            dt = datetime.fromisoformat(date_published)
+            year = dt.year
+            month = dt.month
+            day = dt.day
+            time = dt.time().isoformat()
+        else:
+            year = month = day = time = None
+        
         formatted_posts.append({
             'title': title,
             'body': body,
             'category': category,
-            'date_published': post['date_published']
+            'year': year,
+            'month': month,
+            'day': day,
+            'time': time
         })
     
     return formatted_posts
