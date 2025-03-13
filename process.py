@@ -23,6 +23,12 @@ def extract_posts(html_content):
 def replace_unicode_characters(text):
     return unidecode(text)
 
+def replace_control_codes(text):
+    text = text.replace('\\n', ' ')
+    text = text.replace('\n', ' ')
+    text = text.replace('\"', "'")
+    return text
+
 def filter_and_format(posts):
     formatted_posts = []
     for post in posts:
@@ -32,6 +38,8 @@ def filter_and_format(posts):
         
         if body.startswith(category):
             body = body[len(category):].strip()
+        
+        body = replace_control_codes(body)
         
         formatted_posts.append({
             'title': title,
