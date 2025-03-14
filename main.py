@@ -8,8 +8,9 @@ from pathlib import Path
 def main():
     mode = 'static'
     
-    if len(sys.argv) == 2:
+    if len(sys.argv) >= 2:
         mode = sys.argv[1]
+        print("Only first argument is used.")
     
     url = 'https://updates.snyk.io'
 
