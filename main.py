@@ -3,6 +3,7 @@ import json
 from static import fetch_static
 from dynamic import fetch_dynamic
 from process import extract_posts, filter_and_format
+from latest import save_latest_id, load_latest_id
 from pathlib import Path
 
 def main():
@@ -36,6 +37,14 @@ def main():
         output_dir = Path('snyk_updates')
         output_dir.mkdir(parents=True, exist_ok=True)
         
+        latest_post_id = load_latest_id()
+        found = False
+        if latest_post_id:
+            found = any(post['title'] == latest_post_id['title'] for post in formatted_posts)
+            if not found:
+                print(f"Latest post '{latest_post_id['title']}' dated {latest_post_id['date']} was not found in the import.")
+        
+        latest_post = None
         for year_month, new_posts in posts_by_date.items():
             json_file_path = output_dir / f'snyk_{year_month}.json'
             
@@ -64,6 +73,14 @@ def main():
 
             with open(json_file_path, 'w', encoding='utf-8') as json_file:
                 json.dump(updated_posts, json_file, indent=4, ensure_ascii=False)
+            
+            # track most recnt post
+            if not latest_post or (new_posts and new_posts[0]['year'] >= latest_post['year'] and new_posts[0]['month'] >= latest_post['month'] and new_posts[0]['day'] >= latest_post['day'] and new_posts[0]['time'] >= latest_post['time']):
+                latest_post = new_posts[0]
+        
+        if formatted_posts:
+            latest_post = max(formatted_posts, key=lambda x: (x['year'], x['month'], x['day'], x['time']))
+            save_latest_id({'title': latest_post['title'], 'date': f"{latest_post['year']}-{latest_post['month']:02d}-{latest_post['day']:02d} {latest_post['time']}"})
 
 if __name__ == "__main__":
     main()
