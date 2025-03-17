@@ -1,8 +1,17 @@
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
+
+def fetch_static(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.text
+    else:
+        print(f"Failed to retrieve content: {response.status_code}")
+        return None
 
 def fetch_dynamic(url):
     service = Service(ChromeDriverManager().install())

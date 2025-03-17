@@ -1,6 +1,25 @@
 from bs4 import BeautifulSoup
 from unidecode import unidecode
 from datetime import datetime
+from fetch_html import fetch_static, fetch_dynamic
+
+def fetch_html_content(url, mode):
+    if mode == 'static':
+        return fetch_static(url)
+    elif mode == 'dynamic':
+        return fetch_dynamic(url)
+    else:
+        print("Invalid mode. Use 'static' or 'dynamic'.")
+        return None
+    
+def organise_by_date(formatted_posts):
+    posts_by_date = {}
+    for post in formatted_posts:
+        year_month = f"{post['year']}_{post['month']:02d}"
+        if year_month not in posts_by_date:
+            posts_by_date[year_month] = []
+        posts_by_date[year_month].append(post)
+    return posts_by_date
 
 def extract_posts(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
