@@ -6,9 +6,9 @@ from process_json import update_json_files, save_latest_id, load_latest_id
 def main():
     mode = 'static'
     
-    if len(sys.argv) > 2:
+    if len(sys.argv) >= 2:
         mode = sys.argv[1]
-        print("Only first argument is used.")
+        print("NOTE: Only first argument is used.")
     
     url = 'https://updates.snyk.io'
 
