@@ -2,13 +2,19 @@ import sys
 from pathlib import Path
 from process_content import fetch_html_content, organise_by_date, extract_posts, filter_and_format
 from process_json import update_json_files, save_latest_id, load_latest_id
+from chatgpt import chatgpt_create_summary
 
 def main():
     mode = 'static'
+    generate_summaries = True
     
     if len(sys.argv) >= 2:
         mode = sys.argv[1]
         print("NOTE: Only first argument is used.")
+    
+    if len(sys.argv) >= 3:
+        generate_summaries = sys.argv[2].lower() != 'no-gen'
+        print(f"Summary generation is {'enabled' if generate_summaries else 'disabled'}.")
     
     url = 'https://updates.snyk.io'
 
@@ -34,6 +40,12 @@ def main():
         if formatted_posts:
             latest_post = max(formatted_posts, key=lambda x: (x['year'], x['month'], x['day'], x['time']))
             save_latest_id({'title': latest_post['title'], 'date': f"{latest_post['year']}-{latest_post['month']:02d}-{latest_post['day']:02d} {latest_post['time']}"})
+            
+            if generate_summaries:
+                for post in formatted_posts:
+                    post_date = f"{post['year']}-{post['month']:02d}-{post['day']:02d} {post['time']}"
+                    if not latest_post_id or post_date > latest_post_id['date']:
+                        chatgpt_create_summary(post['title'], post_date, post['body'])
 
 if __name__ == "__main__":
     main()
