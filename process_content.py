@@ -22,17 +22,23 @@ def organise_by_date(formatted_posts):
     return posts_by_date
 
 def extract_posts(html_content):
+    from main import url
     soup = BeautifulSoup(html_content, 'html.parser')
     posts = []
     
     for item in soup.find_all('div', class_='changelogItem'):
-        title = item.find('h2', class_='title').get_text()
+        title_tag = item.find('h2', class_='title').find('a')
+        title = title_tag.get_text()
+        path = title_tag['href']
         body = item.find('div', class_='content').get_text() if item.find('div', class_='content') else ''
         category = item.find('h3', class_='category').get_text() if item.find('h3', class_='category') else ''
         date_published = item.find('time').get('datetime') if item.find('time') else ''
+
+        link = url + path
         
         posts.append({
             'title': title,
+            'url': link,
             'body': body,
             'category': category,
             'date_published': date_published
@@ -58,6 +64,7 @@ def filter_and_format(posts):
     formatted_posts = []
     for post in posts:
         title = replace_unicode_characters(post['title'].strip().title())
+        link = post['url']
         body = replace_unicode_characters(post['body'].strip())
         category = replace_unicode_characters(post['category'].strip())
         
@@ -78,6 +85,7 @@ def filter_and_format(posts):
         
         formatted_posts.append({
             'title': title,
+            'link': link,
             'body': body,
             'category': category,
             'year': year,

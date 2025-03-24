@@ -4,6 +4,8 @@ from process_content import fetch_html_content, organise_by_date, extract_posts,
 from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_summary
 from teams import ms_teams_swnd_response
+    
+url = 'https://updates.snyk.io'
 
 def main():
     mode = 'static'
@@ -16,8 +18,6 @@ def main():
     if len(sys.argv) >= 3:
         generate_summaries = sys.argv[2].lower() != 'no-gen'
         print(f"Summary generation is {'enabled' if generate_summaries else 'disabled'}.")
-    
-    url = 'https://updates.snyk.io'
 
     html_content = fetch_html_content(url, mode)
 
@@ -46,7 +46,7 @@ def main():
                 for post in formatted_posts:
                     post_date = f"{post['year']}-{post['month']:02d}-{post['day']:02d} {post['time']}"
                     if not latest_post_id or post_date > latest_post_id['date']:
-                        chat = chatgpt_create_summary(post['title'], post_date, post['body'])
+                        chat = chatgpt_create_summary(post['title'], post_date, post['body'], post['link'])
                         ms_teams_swnd_response(chat)
 
 if __name__ == "__main__":
