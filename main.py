@@ -3,7 +3,7 @@ from pathlib import Path
 from process_content import fetch_html_content, organise_by_date, extract_posts, filter_and_format
 from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_summary
-from teams import ms_teams_swnd_response
+from teams import ms_teams_send_response
     
 url = 'https://updates.snyk.io'
 
@@ -47,7 +47,7 @@ def main():
                     post_date = f"{post['year']}-{post['month']:02d}-{post['day']:02d} {post['time']}"
                     if not latest_post_id or post_date > latest_post_id['date']:
                         chat = chatgpt_create_summary(post['title'], post_date, post['body'], post['link'])
-                        ms_teams_swnd_response(chat)
+                        ms_teams_send_response(chat)
 
 if __name__ == "__main__":
     main()
