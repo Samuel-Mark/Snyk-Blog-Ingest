@@ -1,7 +1,9 @@
 import os
 import requests
+from dotenv import load_dotenv
 
-ms_teams_webhook_url=os.environ.get("MS_TEAMS_WEBHOOK_URL")
+load_dotenv(override=True)
+ms_teams_webhook_url=os.getenv("MS_TEAMS_WEBHOOK_URL")
 
 def ms_teams_send_response(chat):
     headers = {
