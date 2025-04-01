@@ -9,7 +9,7 @@ def fetch_html_content(url, mode):
     elif mode == 'dynamic':
         return fetch_dynamic(url)
     else:
-        print("Invalid mode. Use 'static' or 'dynamic'.")
+        print("Invalid HTML collection mode. Use 'static' or 'dynamic'.")
         return None
     
 def organise_by_date(formatted_posts):

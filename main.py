@@ -13,7 +13,7 @@ def main():
     
     if len(sys.argv) >= 2:
         mode = sys.argv[1]
-        print("NOTE: Only first argument is used.")
+        print(f"Running with HTML {mode} collection.")
     
     if len(sys.argv) >= 3:
         generate_summaries = sys.argv[2].lower() != 'no-gen'
