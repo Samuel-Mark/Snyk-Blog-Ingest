@@ -31,7 +31,9 @@ def extract_posts(html_content):
         title = title_tag.get_text()
         path = title_tag['href']
         body = item.find('div', class_='content').get_text() if item.find('div', class_='content') else ''
-        category = item.find('h3', class_='category').get_text() if item.find('h3', class_='category') else ''
+        categories = [category.get_text() for category in item.find_all('h3', class_='category')]
+        category = ', '.join(categories)
+        
         date_published = item.find('time').get('datetime') if item.find('time') else ''
 
         link = url + path
@@ -67,9 +69,22 @@ def filter_and_format(posts):
         link = post['url']
         body = replace_unicode_characters(post['body'].strip())
         category = replace_unicode_characters(post['category'].strip())
-        
-        if body.startswith(category):
-            body = body[len(category):].strip()
+        categories = category.split(', ')
+
+        # Approach didn't work due to empty categeories?
+        # while categories:
+        #     for category in categories:
+        #         if body.startswith(category):
+        #             body = body[len(category):].strip()
+        #             categories.remove(category)
+        #             break
+
+        loops = 3
+        for num in range(loops):
+            for categoryIndv in categories:
+                if body.startswith(categoryIndv):
+                    body = body[len(categoryIndv):].strip()
+                    break
         
         body = replace_control_codes(body)
         
