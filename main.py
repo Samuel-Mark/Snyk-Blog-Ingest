@@ -42,6 +42,9 @@ def main():
             latest_post = max(formatted_posts, key=lambda x: (x['year'], x['month'], x['day'], x['time']))
             save_latest_id({'title': latest_post['title'], 'date': f"{latest_post['year']}-{latest_post['month']:02d}-{latest_post['day']:02d} {latest_post['time']}"})
             
+            # Undo reversal for order of summary generation.
+            formatted_posts.sort(key=lambda x: (x['year'], x['month'], x['day'], x['time']), reverse=False)
+            
             if generate_summaries:
                 for post in formatted_posts:
                     post_date = f"{post['year']}-{post['month']:02d}-{post['day']:02d} {post['time']}"
