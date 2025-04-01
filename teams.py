@@ -39,14 +39,14 @@ def ms_teams_send_response(title, date, category, grade, summary, link):
                         },
                         {
                             "type": "TextBlock",
-                            "text": f"Score: {grade}/10",
+                            "text": f"Category: {category}",
                             "weight": "Bolder",
                             "size": "Medium",
                             "wrap": True
                         },
                         {
                             "type": "TextBlock",
-                            "text": f"Category: {category}",
+                            "text": f"Score: {grade}/10",
                             "weight": "Bolder",
                             "size": "Medium",
                             "wrap": True
