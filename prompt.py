@@ -4,9 +4,11 @@ promptPreamble = (
 )
 
 promptScore = (
-    'You will evaluate the update based on its category and content, assigning a usefulness score out of 10. '
+    'You will evaluate the update based on its category and content, assigning a usefulness score within the range of 0 to 10. '
+    'An update will be low scoring if it will not change and improve workflows, or make current workflows more efficient, even if it fixes bugs. '
+    'For example, a bug fix or hotfix will be scored very low whereas new, early access or other features that make the work flow more efficient will be scored highly. '
+    'Something that will better existing workflows will be seen as above average. '
     'The output should be in plain text, with the response being only this number score. '
-    'The worst in this scale is an update that will not change and improve workflows, or make current workflows more efficient, even if it fixes bugs.'
 )
 
 promptSummary = (
@@ -17,5 +19,6 @@ promptSummary = (
     '1. The new Snyk updates clearly and concisely. '
     '2. How they can be used to improve their workflow and the practical applications. '
     '3. Provide guidance on how to best implement the improvements. '
-    '4. As a final seperate note, determine whether the feature should be tested a consultant before being highlighted to the teams, with this decision being reflected in a one line statement of recommendation or not.'
+    '4. As a final seperate note, determine whether the feature should be tested a consultant before being highlighted to the teams. '
+    'This needs to be determined by if the changes are large rather than a minor update with this decision being reflected in a one line statement of recommendation or not.'
 )
