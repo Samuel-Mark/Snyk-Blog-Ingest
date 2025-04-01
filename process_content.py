@@ -63,7 +63,7 @@ def replace_control_codes(text):
 def filter_and_format(posts):
     formatted_posts = []
     for post in posts:
-        title = replace_unicode_characters(post['title'].strip().title())
+        title = replace_unicode_characters(post['title'].strip())
         link = post['url']
         body = replace_unicode_characters(post['body'].strip())
         category = replace_unicode_characters(post['category'].strip())
