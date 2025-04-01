@@ -47,8 +47,8 @@ def main():
                     post_date = f"{post['year']}-{post['month']:02d}-{post['day']:02d} {post['time']}"
                     if not latest_post_id or post_date > latest_post_id['date']:
                         score = chatgpt_create_score(post['title'], post['category'], post['body'])
-                        summary = chatgpt_create_summary(post['title'], post['category'], post['body'], post['link'])
-                        ms_teams_send_response(post['title'], score, summary, post['link'])
+                        summary = chatgpt_create_summary(score, post['title'], post['category'], post['body'])
+                        ms_teams_send_response(post['title'], post['category'], score, summary, post['link'])
 
 if __name__ == "__main__":
     main()

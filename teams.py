@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 ms_teams_webhook_url=os.getenv("MS_TEAMS_WEBHOOK_URL")
 
-def ms_teams_send_response(title, grade, summary, link):
+def ms_teams_send_response(title, category, grade, summary, link):
     headers = {
     "Content-Type": "application/json"
     }
@@ -39,12 +39,19 @@ def ms_teams_send_response(title, grade, summary, link):
                         },
                         {
                             "type": "TextBlock",
+                            "text": f"Category: {category}",
+                            "weight": "Bolder",
+                            "size": "Medium",
+                            "wrap": True
+                        },
+                        {
+                            "type": "TextBlock",
                             "text": summary,
                             "wrap": True
                         },
                         {
                             "type": "TextBlock",
-                            "text": f"[Link to Post]({link})",
+                            "text": f"[See the Original Update]({link})",
                             "weight": "Bolder",
                             "size": "Medium",
                             "wrap": True
