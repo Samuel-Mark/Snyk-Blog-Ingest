@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+import calendar
 from process_content import fetch_html_content, organise_by_date, extract_posts, filter_and_format
 from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_score, chatgpt_create_summary
@@ -51,7 +52,7 @@ def main():
                     if not latest_post_id or post_date > latest_post_id['date']:
                         score = chatgpt_create_score(post['title'], post['category'], post['body'])
                         summary = chatgpt_create_summary(score, post['title'], post['category'], post['body'])
-                        ms_teams_send_response(post['title'], f"{post['day']:02d}-{post['month']:02d}-{post['year']}", post['category'], score, summary, post['link'])
+                        ms_teams_send_response(post['title'], f"{post['day']:02d} {calendar.month_name[post['month']]} {post['year']}", post['category'], score, summary, post['link'])
 
 if __name__ == "__main__":
     main()
