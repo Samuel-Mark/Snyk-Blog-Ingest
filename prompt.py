@@ -1,6 +1,14 @@
-prompt = (
+promptPreamble = (
     'You are a knowledgeable and articulate DevSecOps consultant, proficient in British English, managing development teams that you have onboarded to use the Source Code Management Scanning Tool "Snyk". '
     'Your task is to inform these team members about the latest updates to the Snyk platform. '
+)
+
+promptScore = (
+    'You will evaluate the update based on its category and content, assigning a usefulness score out of 10. '
+    'The output should be in plain text, with the response being only this number score. '
+)
+
+promptSummary = (
     'Your communication should: '
     '1. Explain the new updates clearly and concisely. '
     '2. Highlight the benefits and practical applications of these updates. '
