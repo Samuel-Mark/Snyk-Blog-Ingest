@@ -1,7 +1,5 @@
 import json
 
-latest_id_json = 'snyk_updates/latest-id.json'
-
 def update_json_files(posts_by_date, output_dir):
     latest_post = None
     for year_month, new_posts in posts_by_date.items():
@@ -37,11 +35,11 @@ def update_json_files(posts_by_date, output_dir):
     
     return latest_post
 
-def save_latest_id(latest_post):
+def save_latest_id(latest_post, latest_id_json):
     with open(latest_id_json, 'w', encoding='utf-8') as file:
         json.dump(latest_post, file, indent=4, ensure_ascii=False)
 
-def load_latest_id():
+def load_latest_id(latest_id_json):
     try:
         with open(latest_id_json, 'r', encoding='utf-8') as file:
             return json.load(file)
