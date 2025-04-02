@@ -18,11 +18,9 @@ def chatgpt_create_score(title, category, body):
         
         return chat.output_text
 
-def chatgpt_create_summary(score, title, category, body):
+def chatgpt_create_summary(title, category, body):
     if body:
         post = f'Title: {title}\nCategory: {category}\nBody: {body}\n'
-        if int(score) < 7:
-            return 'Snyk update does not meet impact criteria.'
         chat = client.responses.create(
             model=modelChatGPT, instructions=f"{promptPreamble} {promptSummary}", input=post
         )
