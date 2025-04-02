@@ -19,6 +19,6 @@ promptSummary = (
     '1. The new Snyk updates clearly and concisely. '
     '2. How they can be used to improve their workflow and the practical applications. '
     '3. Provide guidance on how to best implement the improvements. '
-    '4. As a final seperate note, determine whether the feature should be tested a consultant before being highlighted to the teams. '
-    'This needs to be determined by if the changes are large rather than a minor update with this decision being reflected in a one line statement of recommendation or not.'
+    # '4. As a final seperate note, determine whether the feature should be tested a consultant before being highlighted to the teams. '
+    # 'This needs to be determined by if the changes are large rather than a minor update with this decision being reflected in a one line statement of recommendation or not.'
 )
