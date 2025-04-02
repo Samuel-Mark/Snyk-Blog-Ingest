@@ -31,3 +31,12 @@ def fetch_dynamic(url):
     driver.quit()
     
     return html_content
+
+def fetch_html_content(url, mode):
+    if mode == 'static':
+        return fetch_static(url)
+    elif mode == 'dynamic':
+        return fetch_dynamic(url)
+    else:
+        print("Invalid HTML collection mode. Use 'static' or 'dynamic'.")
+        return None

@@ -1,7 +1,8 @@
 import sys
 from pathlib import Path
 import calendar
-from process_content import fetch_html_content, organise_by_date, extract_posts, filter_and_format
+from fetch_html import fetch_html_content
+from process_content import organise_by_date, extract_posts, filter_and_format
 from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_score, chatgpt_create_summary
 from teams import ms_teams_send_response
