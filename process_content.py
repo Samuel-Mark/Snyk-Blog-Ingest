@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from unidecode import unidecode
 from datetime import datetime
     
+# 2A. Organises the posts into year_month categories.
 def organise_by_date(formatted_posts):
     posts_by_date = {}
     for post in formatted_posts:
@@ -11,6 +12,7 @@ def organise_by_date(formatted_posts):
         posts_by_date[year_month].append(post)
     return posts_by_date
 
+# 2B. Extract useful data from the HTML content
 def extract_posts(html_content):
     from main import url
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -38,6 +40,7 @@ def extract_posts(html_content):
     
     return posts
 
+# 2C. Replace Unicode Charcters and Control Codes
 def replace_unicode_characters(text):
     return unidecode(text)
 
@@ -52,9 +55,11 @@ def replace_control_codes(text):
     
     return text
 
+# 2D. Return cleaned and formatted lists of posts.
 def filter_and_format(posts):
     formatted_posts = []
     for post in posts:
+        # 2E. Clean up Unicode Characters and get individual details.
         title = replace_unicode_characters(post['title'].strip())
         link = post['url']
         body = replace_unicode_characters(post['body'].strip())
@@ -69,6 +74,9 @@ def filter_and_format(posts):
         #             categories.remove(category)
         #             break
 
+        # 2F. Remove each category from the body text.
+        # Performed three times so can remove up to three categories.
+        # Variation of above implementation may be better.
         loops = 3
         for num in range(loops):
             for categoryIndv in categories:
@@ -78,6 +86,7 @@ def filter_and_format(posts):
         
         body = replace_control_codes(body)
         
+        # 2G. Extract year, month, day and time from string.
         date_published = post['date_published']
         if date_published:
             dt = datetime.fromisoformat(date_published)
@@ -88,6 +97,7 @@ def filter_and_format(posts):
         else:
             year = month = day = time = None
         
+        # 2H. Add Post to formatted_posts.
         formatted_posts.append({
             'title': title,
             'link': link,
@@ -101,6 +111,7 @@ def filter_and_format(posts):
     
     return formatted_posts
 
+# 7D. Returns ordinal for the number parsed through.
 def get_ordinal_for_date(day):
     if 4 <= day <= 20 or 24 <= day <= 30:
         return "th"

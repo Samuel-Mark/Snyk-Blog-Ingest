@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
+# 1A. Static fetching of HTML Content, loads the page and then takes all content loaded.
 def fetch_static(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -13,6 +14,8 @@ def fetch_static(url):
         print(f"Failed to retrieve content: {response.status_code}")
         return None
 
+# 1B. Dynamic fetching of HTML Content, loads the page repeatedly presses the pages 'Show previous updates'
+# button to load all posts.
 def fetch_dynamic(url):
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
@@ -32,6 +35,7 @@ def fetch_dynamic(url):
     
     return html_content
 
+# 1C. Performs a HTML fetch based to a URL based on an input.
 def fetch_html_content(url, mode):
     if mode == 'static':
         return fetch_static(url)
