@@ -1,4 +1,6 @@
+import os
 import sys
+from dotenv import load_dotenv
 from pathlib import Path
 import calendar
 from fetch_html import fetch_html_content
@@ -7,8 +9,9 @@ from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_score, chatgpt_create_summary
 from teams import ms_teams_send_response
     
+load_dotenv(override=True)
 url = 'https://updates.snyk.io'
-output_dir = Path('/Users/sme606/Code/Snyk-Blog-Ingest/snyk_updates/')
+output_dir = Path(os.getenv('PATH_TO_PROJECT'))
 latest_id_json = output_dir / Path('latest-id.json')
 
 def main():
