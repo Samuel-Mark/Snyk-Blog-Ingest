@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 ms_teams_webhook_url=os.getenv("MS_TEAMS_WEBHOOK_URL")
 
-def ms_teams_send_response(title, date, category, grade, summary, link):
+def ms_teams_send_response(title, date, category, score, summary, link):
     headers = {
     "Content-Type": "application/json"
     }
@@ -25,16 +25,16 @@ def ms_teams_send_response(title, date, category, grade, summary, link):
                     "body": [
                         {
                             "type": "TextBlock",
-                            "text": title,
-                            "weight": "Bolder",
-                            "size": "Large",
+                            "text": f"_{date}_",
+                            "weight": "Lighter",
+                            "size": "Medium",
                             "wrap": True
                         },
                         {
                             "type": "TextBlock",
-                            "text": f"Date: {date}",
+                            "text": title,
                             "weight": "Bolder",
-                            "size": "Medium",
+                            "size": "Large",
                             "wrap": True
                         },
                         {
@@ -46,7 +46,7 @@ def ms_teams_send_response(title, date, category, grade, summary, link):
                         },
                         {
                             "type": "TextBlock",
-                            "text": f"Score: {grade}/10",
+                            "text": f"Score: {score}/10",
                             "weight": "Bolder",
                             "size": "Medium",
                             "wrap": True

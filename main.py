@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import calendar
 from fetch_html import fetch_html_content
-from process_content import organise_by_date, extract_posts, filter_and_format
+from process_content import organise_by_date, extract_posts, filter_and_format, get_ordinal_for_date
 from process_json import update_json_files, save_latest_id, load_latest_id
 from chatgpt import chatgpt_create_score, chatgpt_create_summary
 from teams import ms_teams_send_response
@@ -58,7 +58,14 @@ def main():
                         score = chatgpt_create_score(post['title'], post['category'], post['body'])
                         if int(score) < 7: summary = 'Snyk update does not meet impact criteria.'
                         else: summary = chatgpt_create_summary(post['title'], post['category'], post['body'])
-                        ms_teams_send_response(post['title'], f"{post['day']:02d} {calendar.month_name[post['month']]} {post['year']}", post['category'], score, summary, post['link'])
+                        # Could have a function to get calendar ordinals for Teams message
+                        ms_teams_send_response(post['title'],
+                                            #    Date Start
+                                               f"{calendar.day_name[calendar.weekday(post['year'], post['month'], post['day'])]} "
+                                               f"{post['day']}{get_ordinal_for_date(post['day'])} "
+                                               f"{calendar.month_name[post['month']]} {post['year']}",
+                                            #    Date End
+                                               post['category'], score, summary, post['link'])
 
 if __name__ == "__main__":
     main()
